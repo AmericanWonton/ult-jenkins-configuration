@@ -1,0 +1,8 @@
+#Purpose:
+This program is a docker container running Jenkins. It will have credentials and other setup tools installed within 
+the container,(including plugins, example Dev users, etc.)
+
+To run: 
+
+Make sure port 7070 is open on the operating machine. Utilize the Makefile to start and stop this container
+

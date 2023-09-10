@@ -1,0 +1,195 @@
+#Used for User credentials
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - basicSSHUserPrivateKey:
+              scope: GLOBAL
+              id: basic-SSH
+              username: ssh-username
+              passphrase: ''
+              description: SSH Credentials for ssh-username
+              privateKeySource:
+                directEntry:
+                  privateKey: '${SSH_PRIVATE_KEY}'
+          - basicSSHUserPrivateKey:
+              scope: GLOBAL
+              id: private-resume-key
+              username: resumeprivate
+              passphrase: '${AW_RESUME_SERVERKEY_PASSPHRASE}'
+              description: Jenkins Private Key on Resume Server
+              privateKeySource:
+                directEntry:
+                  privateKey: '${AW_RESUME_PRIVATEKEY}'
+          - usernamePassword:
+              scope: GLOBAL
+              id: gitLogin
+              username: '${AW_GITUSERNAME}}'
+              password: '${AW_GITPASSWORD}'
+              description: Username/Password Credentials for AW Github
+          - usernamePassword:
+              scope: GLOBAL
+              id: git-general-token
+              username: 'generalToken'
+              password: '${AW_GITGENERALTOKEN}'
+              description: Token Credentials for AW Github
+          - usernamePassword:
+              scope: GLOBAL
+              id: dockerLogin
+              username: americanwonton
+              password: '${AW_DOCKER_PWORD}'
+              description: Username/Password Credentials for AW Docker
+          - usernamePassword:
+              scope: GLOBAL
+              id: username
+              username: some-user
+              password: '${SomeUserPassword}'
+              description: Username/Password Credentials for some-user
+          - usernamePassword:
+              scope: GLOBAL
+              id: resume-server-ip-address
+              username: Resume-IP
+              password: '${RESUME_SITE_IPADDRESS}'
+              description: The IP Address of our Resume server
+          - usernamePassword:
+              scope: GLOBAL
+              id: AW_CLIENTID
+              username: AW_CLIENTID
+              password: '${AW_CLIENTID}'
+              description: Client ID for AW with Google
+          - usernamePassword:
+              scope: GLOBAL
+              id: AW_CLIENT_SECRET
+              username: AW_CLIENT_SECRET
+              password: '${AW_CLIENT_SECRET}'
+              description: Client Secret for Google for AW
+          - usernamePassword:
+              scope: GLOBAL
+              id: AW_ACCESS_TOKEN
+              username: AW_ACCESS_TOKEN
+              password: '${AW_ACCESS_TOKEN}'
+              description: AW Access Token for Google
+          - usernamePassword:
+              scope: GLOBAL
+              id: AW_REFRESHTOKEN
+              username: AW_REFRESHTOKEN
+              password: '${AW_REFRESHTOKEN}'
+              description: AW Refresh Token for Google
+          - usernamePassword:
+              scope: GLOBAL
+              id: secret-file-path
+              username: secretFilePath
+              password: '${SECRET_FILE_PATH}'
+              description: The path to our secret files
+          - usernamePassword:
+              scope: GLOBAL
+              id: resume_secret_file
+              username: RESUME_SECRET_FILE
+              password: '${RESUME_SECRET_FILE}'
+              description: Secret File for our Resume server
+          - usernamePassword:
+              scope: GLOBAL
+              id: resume_env_file
+              username: RESUME_ENV_FILE
+              password: '${RESUME_ENV_FILE}'
+              description: Path to our Resume env file
+          - usernamePassword:
+              scope: GLOBAL
+              id: gdess_dockerLogin
+              username: '${GDESS_DOCKER_UNAME}'
+              password: '${GDESS_DOCKER_PWORD}'
+              description: Docker Credentials for gdess
+          - usernamePassword:
+              scope: GLOBAL
+              id: gdess_gitLogin
+              username: '${GDESS_GITUSERNAME}'
+              password: '${GDESS_GITPASSWORD}'
+              description: Git for gdess
+          - usernamePassword:
+              scope: GLOBAL
+              id: gdess_gitLogin2
+              username: '${GDESS_GITUSERNAME}'
+              password: '${GDESS_GITAUTHENTIFICATION}'
+              description: Auth code for Gdess Git
+          - usernamePassword:
+              scope: GLOBAL
+              id: GDESS_USERID_1
+              username: 'GDESS_USERID_1'
+              password: '${GDESS_USERID_1}'
+              description: Used for creating story codes
+          - usernamePassword:
+              scope: GLOBAL
+              id: GDESS_ADMINID_1
+              username: 'GDESS_ADMINID_1'
+              password: '${GDESS_ADMINID_1}'
+              description: Used for creating story codes
+          - usernamePassword:
+              scope: GLOBAL
+              id: gdess-server-ip-address
+              username: GDESS_IP_ADDRESS
+              password: '${GDESS_IP_ADDRESS}'
+              description: The IP Adress for Gdess server
+          - usernamePassword:
+              scope: GLOBAL
+              id: gdess_secret_file
+              username: GDESS_SECRET_FILE
+              password: '${GDESS_SECRET_FILE}'
+              description: Location of env file for gdess
+          - usernamePassword:
+              scope: GLOBAL
+              id: gdess_secret_swear_file
+              username: GDESS_SWEAR_WORD_FILE
+              password: '${GDESS_SWEAR_WORD_FILE}'
+              description: gdess file for swears
+          - usernamePassword:
+              scope: GLOBAL
+              id: gdess-env-file
+              username: GDESS_ENV_FILE
+              password: '${GDESS_ENV_FILE}'
+              description: Location of gdess environment file
+          - string:
+              scope: GLOBAL
+              id: secret-text
+              secret: '${SecretText}'
+              description: Secret Text
+
+jenkins:
+  systemMessage: "This is an example Jenkins Setup"
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: ${JENKINS_ADMIN_ID}
+          password: ${JENKINS_ADMIN_PASSWORD}
+  authorizationStrategy:
+    globalMatrix:
+      permissions:
+        - "Overall/Administer:admin"
+        - "Overall/Read:authenticated"
+  remotingSecurity:
+    enabled: true
+security:
+  queueItemAuthenticator:
+    authenticators:
+    - global:
+        strategy: triggeringUsersAuthorizationStrategy
+unclassified:
+  location:
+    url: http://server_ip:8080/
+
+#Used for Golang Installations
+tool:
+  go:
+    installations:
+    - name: "Go-Installation-1.17.5"
+      properties:
+      - installSource:
+          installers:
+          - golangInstaller:
+              id: "1.17.5"
+    - name: "Go-Installation-1.16.12"
+      properties:
+      - installSource:
+          installers:
+          - golangInstaller:
+              id: "1.16.12"
