@@ -2,3 +2,9 @@
 #*.pub
 #resumekeygen
 #resumekeygen.pub
+jenkins_startup_script.sh
+Makefile
+.gitignore
+notes.txt
+README.md
+logging
