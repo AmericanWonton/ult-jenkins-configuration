@@ -20,6 +20,28 @@ LOG_FILE="${LOG_PATH}/${date}_jenkins_startup.log"
 
 echo "Current Log path: ${LOG_FILE}" | tee -a $LOG_FILE
 
+#Determine which OS is running,(used for mounts later)
+mount_location=""
+the_OS=$OSTYPE
+case "$the_OS" in 
+    *msys*)
+        echo "We should be using windows: ${the_OS}" | tee -a $LOG_FILE
+
+        mount_location="${current_path}\jenkins_mount_location_windows"
+        ;;
+    *linux*)
+        echo "We should be using linux: ${the_OS}" | tee -a $LOG_FILE
+        
+        mount_location="${current_path}\jenkins_mount_location_linux"
+        ;;
+    *)
+        echo "Undefined os type, we'll use linux: ${the_OS}" | tee -a $LOG_FILE
+        
+        mount_location="${current_path}\jenkins_mount_location_linux"
+        ;;
+esac
+
+
 #Run the jenkins start function based on what is passed
 case $the_function in
     "full")
@@ -44,11 +66,13 @@ case $the_function in
         fi
 
         #Tag and push the jenkins container
-        docker tag jenkins_proj americanwonton/jenkins_proj
-        docker push americanwonton/jenkins_proj
+        docker tag jenkins_proj americanwonton/jenkins_proj && docker push americanwonton/jenkins_proj
 
         #Pull any relevant docker info pushed
-        sudo docker pull americanwonton/jenkins_proj:latest
+        docker pull americanwonton/jenkins_proj:latest
+
+        #Run the jenkins container from the background
+
     ;;
     "oof")
 

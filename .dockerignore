@@ -8,3 +8,6 @@ Makefile
 notes.txt
 README.md
 logging
+#Docker Mounts
+jenkins_mount_location_linux/*
+jenkins_mount_location_windows/*

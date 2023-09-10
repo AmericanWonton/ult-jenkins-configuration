@@ -6,3 +6,8 @@ To run:
 
 Make sure port 7070 is open on the operating machine. Utilize the Makefile to start and stop this container
 
+For the plugins, there's a new method of installing them:
+https://github.com/jenkinsci/docker/blob/master/README.md#usage-1
+
+Note, for the docker mount, you'll need to change the command when on a windows OS versus a 
+linux
