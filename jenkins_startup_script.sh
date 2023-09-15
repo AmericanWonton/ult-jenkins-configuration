@@ -13,6 +13,7 @@ the_function=$1
 date="$(date +'%d-%m-%Y__%H-%M-%S-%3N')"
 current_path=$(pwd)
 LOG_PATH="${current_path}/logging"
+creds_listing="creds_listing"
 
 touch "${LOG_PATH}/${date}_jenkins_startup.log"
 chmod 777 "${LOG_PATH}/${date}_jenkins_startup.log"
@@ -41,6 +42,9 @@ case "$the_OS" in
         ;;
 esac
 
+echo "${current_path}/${creds_listing}"
+
+exit 1
 
 #Run the jenkins start function based on what is passed
 case $the_function in
@@ -72,7 +76,14 @@ case $the_function in
         docker pull americanwonton/jenkins_proj:latest
 
         #Run the jenkins container from the background
-
+        docker run --env-file $current_path/$creds_listing/env-creds.list \
+        --name jenkins_proj \
+        -u root \
+        --group-add 0 \
+        -v jenkins_volume1:/var/jenkins_home \
+        -v /var/run/docker.sock:/var/run/docker.sock \
+        --name jenkins \
+        --rm -d -p 5000:7070 americanwonton/jenkins_proj
     ;;
     "oof")
 
