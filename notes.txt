@@ -18,3 +18,6 @@ https://github.com/jenkinsci/docker/blob/master/README.md#usage-1
 
 Note, for the docker mount, you'll need to change the command when on a windows OS versus a 
 linux
+
+For windows, you'll need to change the socket directory as well:
+https://stackoverflow.com/questions/36765138/bind-to-docker-socket-on-windows

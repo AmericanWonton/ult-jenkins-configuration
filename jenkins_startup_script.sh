@@ -14,6 +14,8 @@ date="$(date +'%d-%m-%Y__%H-%M-%S-%3N')"
 current_path=$(pwd)
 LOG_PATH="${current_path}/logging"
 creds_listing="creds_listing"
+#Need to change this based on a windows OS or a linux OS
+docker_socket=""
 
 touch "${LOG_PATH}/${date}_jenkins_startup.log"
 chmod 777 "${LOG_PATH}/${date}_jenkins_startup.log"
@@ -29,22 +31,21 @@ case "$the_OS" in
         echo "We should be using windows: ${the_OS}" | tee -a $LOG_FILE
 
         mount_location="${current_path}\jenkins_mount_location_windows"
+        docker_socket="//var/run/docker.sock:/var/run/docker.sock"
         ;;
     *linux*)
         echo "We should be using linux: ${the_OS}" | tee -a $LOG_FILE
         
         mount_location="${current_path}\jenkins_mount_location_linux"
+        docker_socket="/var/run/docker.sock:/var/run/docker.sock"
         ;;
     *)
         echo "Undefined os type, we'll use linux: ${the_OS}" | tee -a $LOG_FILE
         
         mount_location="${current_path}\jenkins_mount_location_linux"
+        docker_socket="/var/run/docker.sock:/var/run/docker.sock"
         ;;
 esac
-
-echo "${current_path}/${creds_listing}"
-
-exit 1
 
 #Run the jenkins start function based on what is passed
 case $the_function in
@@ -81,7 +82,7 @@ case $the_function in
         -u root \
         --group-add 0 \
         -v jenkins_volume1:/var/jenkins_home \
-        -v /var/run/docker.sock:/var/run/docker.sock \
+        -v ${docker_socket} \
         --name jenkins \
         --rm -d -p 5000:7070 americanwonton/jenkins_proj
     ;;
