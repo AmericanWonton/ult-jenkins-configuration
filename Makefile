@@ -10,6 +10,8 @@ jenk-run:
 	-v /var/run/docker.sock:/var/run/docker.sock \
 	--name jenkins \
 	--rm -d -p 5000:8080 jenkins:jcasc
+jenkins-all:
+	./jenkins_startup_script.sh full
 jenk-all:
 	#This kills the docker container, then re-starts it
 	docker container kill jenkins

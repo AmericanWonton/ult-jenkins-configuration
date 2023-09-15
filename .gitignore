@@ -1,2 +1,7 @@
 #credentials
 creds_listing/*
+#Docker Mounts
+jenkins_mount_location_linux/*
+jenkins_mount_location_windows/*
+#logging
+logging/*

@@ -6,3 +6,18 @@ To run:
 
 Make sure port 7070 is open on the operating machine. Utilize the Makefile to start and stop this container
 
+Make sure to create these 2 volumes on your machine:
+(For windows):
+docker volume create --name jenkins_volume1
+
+For declaring docker sock,(needed for installing docker inside of our docker container):
+https://stackoverflow.com/questions/35110146/what-is-the-purpose-of-the-file-docker-sock
+
+For the plugins, there's a new method of installing them:
+https://github.com/jenkinsci/docker/blob/master/README.md#usage-1
+
+Note, for the docker mount, you'll need to change the command when on a windows OS versus a 
+linux
+
+For windows, you'll need to change the socket directory as well:
+https://stackoverflow.com/questions/36765138/bind-to-docker-socket-on-windows
