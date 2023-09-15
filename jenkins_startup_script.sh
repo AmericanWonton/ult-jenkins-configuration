@@ -77,14 +77,23 @@ case $the_function in
         docker pull americanwonton/jenkins_proj:latest
 
         #Run the jenkins container from the background
-        docker run --env-file $current_path/$creds_listing/env-creds.list \
+        Result=`docker run --env-file $current_path/$creds_listing/env-creds.list \
         --name jenkins_proj \
         -u root \
         --group-add 0 \
         -v jenkins_volume1:/var/jenkins_home \
         -v ${docker_socket} \
         --name jenkins \
-        --rm -d -p 5000:7070 americanwonton/jenkins_proj
+        --rm -d -p 5000:7070 americanwonton/jenkins_proj`
+        
+        if [ $? -ne 0 ];then
+            echo "There was an issue with starting the docker container" | tee -a $LOG_FILE
+            echo "${Result}" | tee -a $LOG_FILE
+            exit 1
+        else 
+            echo "Docker container started on http://localhost:7070" | tee -a $LOG_FILE
+            echo "${Result}" | tee -a $LOG_FILE
+        fi
     ;;
     "oof")
 
