@@ -1,5 +1,7 @@
 FROM jenkins/jenkins:latest
 #Need to be root User to do all this stuff
+# Add Maintainer Info
+LABEL maintainer="Joseph Keller <jbkeller@gmail.com>"
 USER root
 #This prevents the container from performing the initial setup wizard
 ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
